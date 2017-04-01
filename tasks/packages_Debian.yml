@@ -39,6 +39,7 @@
 - name: Jenkins Install
   apt:
     name: jenkins
+    update_cache: yes
     # Setting this to 'latest' is perhaps debatable, but it seems silly not to
     # since this plugin also updates all of the Jenkins plugins automatically.
     state: latest
