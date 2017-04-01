@@ -51,3 +51,14 @@
 - name: Verify Jenkins Web UI Content
   action: fail
   when: jenkins_ui.content.find('Jenkins ver. 2') == -1
+
+# Install users
+- name: Install Jenkins' users
+  shell: >
+    echo 'jenkins.model.Jenkins.instance.securityRealm.createAccount("{{ item.user }}","{{ item.password }}")' |
+    java  -jar /opt/jenkins/jenkins-cli.jar -s http://localhost:8080 groovy =
+  become: true
+  become_user: jenkins
+  no_log: true
+  with_items: "{{ jenkins_users }}"
+
